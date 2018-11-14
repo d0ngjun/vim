@@ -1,0 +1,234 @@
+" ==========================================
+" bundle 插件管理和配置项
+" ==========================================
+
+" 非兼容vi模式。去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
+set nocompatible
+" configure Vundle
+filetype off " required! turn off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" 使用Vundle来管理插件
+" :BundleInstall 安装配置的插件
+" :BundleUpdate  更新
+" :BundleClean   删除本地无用插件
+Bundle 'gmarik/vundle'
+
+" ################### 基础 ######################
+
+" 多语言语法检查
+" :SyntasticInfo  display the available/enabled checkers.
+" :Errors         list errors
+Bundle 'scrooloose/syntastic'
+let g:syntastic_error_symbol = '>>'
+let g:syntastic_warning_symbol = '>'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_highlighting = 1
+let g:syntastic_python_python_exec = '/usr/bin/python3'
+let g:syntastic_cpp_compiler_options = '-std=c++11'
+
+" pyflakes is faster than pylint
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+" pyflakes is faster than pylint
+let g:syntastic_javascript_checkers = ['jshint']
+" let g:syntastic_python_pep8_args = '--ignore=E501,E225,E124,E712,E126,E128'
+let g:loaded_syntastic_java_javac_checker = 1
+
+" enable check for c/cpp files
+let g:ycm_show_diagnostics_ui = 0
+
+" load project configuration.
+let g:syntastic_cpp_config_file = '~/.syntastic_odin_config'
+
+" ################### 自动补全 ###################
+
+" 代码自动补全
+" 重启 :YcmRestartServer
+Bundle 'Valloric/YouCompleteMe'
+let g:ycm_python_binary_path = '/usr/bin/python3'
+" youcompleteme  默认tab  s-tab 和自动补全冲突
+let g:ycm_key_list_select_completion = ['<c-n>']
+let g:ycm_key_list_previous_completion = ['<c-p>']
+" 在注释输入中也能补全
+let g:ycm_complete_in_comments = 1
+" 在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1
+" 注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+" 语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
+let g:ycm_seed_identifiers_with_syntax = 1
+" 跳转到定义处, 分屏打开
+let g:ycm_goto_buffer_command = 'horizontal-split'
+" 不要每次启动时询问是否加载.ycm_extra_conf.py
+let g:ycm_confirm_extra_conf = 0
+nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
+
+" for javascript auto-completion
+Bundle 'marijnh/tern_for_vim'
+
+" html/xml tag auto-completion
+Bundle 'docunext/closetag.vim'
+let g:closetag_html_style = 1
+
+" html indent
+Bundle 'vim-scripts/indenthtml.vim'
+
+" ################### 功能相关 ###################
+
+" 文件搜索
+" change to https://github.com/ctrlpvim/ctrlp.vim
+Bundle 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_map = '<leader>p'
+map <leader>f :CtrlPMRU<CR>
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ }
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_match_window_bottom = 1
+let g:ctrlp_max_height = 15
+let g:ctrlp_match_window_reversed = 0
+let g:ctrlp_mruf_max = 500
+let g:ctrlp_follow_symlinks = 1
+" 如果安装了ag, 使用ag
+if executable('ag')
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
+
+" 类似sublimetext的搜索
+Bundle "dyng/ctrlsf.vim"
+" In CtrlSF window:
+" 回车/o, 打开
+" t   在tab中打开(建议)
+" T - Lkie t but focus CtrlSF window instead of opened new tab.
+" q - Quit CtrlSF window.
+nmap \ <Plug>CtrlSFCwordPath<CR>
+" let g:ctrlsf_position = 'below'
+" let g:ctrlsf_winsize = '30%'
+let g:ctrlsf_auto_close = 0
+let g:ctrlsf_confirm_save = 0
+" Note: cannot use <CR> or <C-m> for open
+" Use : <sapce> or <tab>
+let g:ctrlsf_mapping = {
+    \ "open"  : "<Space>",
+    \ "openb" : "O",
+    \ "tab"   : "t",
+    \ "tabb"  : "T",
+    \ "prevw" : "p",
+    \ "quit"  : "q",
+    \ "next"  : "<C-J>",
+    \ "prev"  : "<C-K>",
+    \ "pquit" : "q",
+    \ }
+
+" git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
+" :Gdiff  :Gstatus :Gvsplit
+Bundle 'tpope/vim-fugitive'
+nnoremap <leader>ge :Gvdiff<CR>
+" not ready to open
+" <leader>gb maps to :Gblame<CR>
+" <leader>gs maps to :Gstatus<CR>
+" <leader>gd maps to :Gdiff<CR>  和现有冲突
+" <leader>gl maps to :Glog<CR>
+" <leader>gc maps to :Gcommit<CR>
+" <leader>gp maps to :Git push<CR>
+
+" edit history, 可以查看回到某个历史状态
+Bundle 'sjl/gundo.vim'
+noremap <leader>h :GundoToggle<CR>
+
+" ################### 显示增强 ###################
+
+" 状态栏增强展示
+" 新的airline配置
+" Bundle 'vim-airline/vim-airline-themes'
+Bundle 'bling/vim-airline'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '☰'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.maxlinenr = '㏑'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" 是否打开tabline
+" let g:airline#extensions#tabline#enabled = 1
+
+" 括号显示增强
+Bundle 'kien/rainbow_parentheses.vim'
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+
+" ################### 显示增强-主题 ###################"
+
+" 主题 molokai
+Bundle 'tomasr/molokai'
+let g:molokai_original = 1
+let g:rehash256 = 1
+
+" ################### 快速导航 ###################
+"目录导航
+Bundle 'scrooloose/nerdtree'
+map <F3> :NERDTreeMirrorToggle<CR>
+let NERDTreeHighlightCursorline = 1
+let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$']
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+" s/v 分屏打开文件
+let g:NERDTreeMapOpenSplit = 's'
+let g:NERDTreeMapOpenVSplit = 'v'
+
+
+Bundle 'jistr/vim-nerdtree-tabs'
+map <Leader>n <plug>NERDTreeTabsToggle<CR>
+" 关闭同步
+let g:nerdtree_tabs_synchronize_view = 0
+let g:nerdtree_tabs_synchronize_focus = 0
+" 自动开启nerdtree
+"let g:nerdtree_tabs_open_on_console_startup = 1
+
+" 标签导航
+Bundle 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
+" ################### 语言相关 ###################
+
+" For tmux navigator Ctrl-hjkl
+Bundle 'christoomey/vim-tmux-navigator'
+
+Bundle 'thinca/vim-quickrun'
+let g:quickrun_config = {
+\   "_" : {
+\       "outputter" : "message",
+\   },
+\}
+
+let g:quickrun_no_default_key_mappings = 1
+nmap <F9> <Plug>(quickrun)

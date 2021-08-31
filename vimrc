@@ -9,7 +9,7 @@ let g:mapleader = ','
 " 开启语法高亮
 syntax on
 
-" install Vundle bundles
+" install vundle bundles
 if filereadable(expand("~/.vimrc.bundles"))
     source ~/.vimrc.bundles
 endif
@@ -17,9 +17,6 @@ endif
 "==========================================
 " General Settings 基础设置
 "==========================================
-
-" history存储容量
-set history=2000
 
 " 检测文件类型
 filetype on
@@ -29,11 +26,6 @@ filetype indent on
 filetype plugin on
 " 启动自动补全
 filetype plugin indent on
-" 文件修改之后自动载入
-set autoread
-
-" 关闭交换文件
-set noswapfile
 
 " create undo file
 if has('persistent_undo')
@@ -42,26 +34,26 @@ if has('persistent_undo')
     " number of lines to save for undo
     set undoreload=10000
     set undofile
-    " NOTE: need create this directory first.
-    set undodir=/tmp/vimundo/
+    " NOTE: need create this directory first
+    set undodir=~/.vim/undo/
 endif
+
+" history存储容量
+set history=10000
+
+" 关闭交换文件
+set noswapfile
 
 " 高亮搜索词
 set hlsearch
 
 set wildignore=*.swp,*.bak,*.pyc,*.class,.svn
-" 突出显示当前列
-" set cursorcolumn
 
 " 设置 退出vim后，内容显示在终端屏幕, 可以用于查看和复制
 set t_ti= t_te=
 
 " 禁用鼠标
 set mouse=
-
-" No annoying sound on errors
-set novisualbell
-set noerrorbells
 
 " Remember info about open buffers on close"
 set viminfo^=%
@@ -124,6 +116,7 @@ set nrformats=
 "==========================================
 " 设置新文件的编码为 UTF-8
 set encoding=utf-8
+
 " 自动判断编码时，依次尝试以下编码：
 set fileencodings=ucs-bom,utf-8,gb18030
 
@@ -132,6 +125,7 @@ set termencoding=utf-8
 
 " 如遇Unicode值大于255的文本，不必等到空格再折行。
 set formatoptions+=m
+
 " 合并两行中文时，不在中间加空格：
 set formatoptions+=B
 
@@ -156,7 +150,7 @@ endif
 " HotKey Settings  自定义快捷键设置
 "==========================================
 
-set pastetoggle=<F5>
+set pastetoggle=<leader>a
 " disbale paste mode when leaving insert mode
 au InsertLeave * set nopaste
 
@@ -185,9 +179,6 @@ noremap <leader>0 :tablast<cr>
 " Toggles between the active and last active tab "
 " The first tab is always 1 "
 let g:last_active_tab = 1
-" nnoremap <leader>gt :execute 'tabnext ' . g:last_active_tab<cr>
-" nnoremap <silent> <c-o> :execute 'tabnext ' . g:last_active_tab<cr>
-" vnoremap <silent> <c-o> :execute 'tabnext ' . g:last_active_tab<cr>
 nnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
 vnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
 autocmd TabLeave * let g:last_active_tab = tabpagenr()
@@ -252,18 +243,18 @@ endif
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
-    set guioptions+=e
     set guioptions-=r
     set guioptions-=L
     set guitablabel=%M\ %t
     set showtabline=1
     set linespace=2
     set noimd
-    set guifont=DejaVu\ Sans\ Mono\ 14
+    set guifont=DejaVu\ Sans\ Mono\ 12
 endif
 
-" theme主题
-set t_Co=256
+" 开启真彩色
+set termguicolors
+
 colorscheme molokai
 
 " for error highlight，防止错误整行标红导致看不清

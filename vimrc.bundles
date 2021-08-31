@@ -27,7 +27,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_python_python_exec = '/usr/bin/python3'
-let g:syntastic_cpp_compiler_options = '-std=c++11'
+let g:syntastic_cpp_compiler_options = '-std=c++14'
 
 " pyflakes is faster than pylint
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
@@ -40,43 +40,7 @@ let g:loaded_syntastic_java_javac_checker = 1
 let g:ycm_show_diagnostics_ui = 0
 
 " load project configuration.
-let g:syntastic_cpp_config_file = '~/.syntastic_odin_config'
-
-" ################### 自动补全 ###################
-
-" 代码自动补全
-" 重启 :YcmRestartServer
-Bundle 'Valloric/YouCompleteMe'
-let g:ycm_python_binary_path = '/usr/bin/python3'
-" youcompleteme  默认tab  s-tab 和自动补全冲突
-let g:ycm_key_list_select_completion = ['<c-n>']
-let g:ycm_key_list_previous_completion = ['<c-p>']
-" 在注释输入中也能补全
-let g:ycm_complete_in_comments = 1
-" 在字符串输入中也能补全
-let g:ycm_complete_in_strings = 1
-" 注释和字符串中的文字也会被收入补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
-" 语言关键字补全, 不过python关键字都很短，所以，需要的自己打开
-let g:ycm_seed_identifiers_with_syntax = 1
-" 跳转到定义处, 分屏打开
-let g:ycm_goto_buffer_command = 'horizontal-split'
-" 不要每次启动时询问是否加载.ycm_extra_conf.py
-let g:ycm_confirm_extra_conf = 0
-nnoremap <leader>jd :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>gd :YcmCompleter GoToDeclaration<CR>
-
-" for javascript auto-completion
-Bundle 'marijnh/tern_for_vim'
-
-" html/xml tag auto-completion
-Bundle 'docunext/closetag.vim'
-let g:closetag_html_style = 1
-
-" html indent
-Bundle 'vim-scripts/indenthtml.vim'
+"let g:syntastic_cpp_config_file = '~/.syntastic_config'
 
 " ################### 功能相关 ###################
 
@@ -103,47 +67,9 @@ if executable('ag')
     let g:ctrlp_use_caching = 0
 endif
 
-" 类似sublimetext的搜索
-Bundle "dyng/ctrlsf.vim"
-" In CtrlSF window:
-" 回车/o, 打开
-" t   在tab中打开(建议)
-" T - Lkie t but focus CtrlSF window instead of opened new tab.
-" q - Quit CtrlSF window.
-nmap \ <Plug>CtrlSFCwordPath<CR>
-" let g:ctrlsf_position = 'below'
-" let g:ctrlsf_winsize = '30%'
-let g:ctrlsf_auto_close = 0
-let g:ctrlsf_confirm_save = 0
-" Note: cannot use <CR> or <C-m> for open
-" Use : <sapce> or <tab>
-let g:ctrlsf_mapping = {
-    \ "open"  : "<Space>",
-    \ "openb" : "O",
-    \ "tab"   : "t",
-    \ "tabb"  : "T",
-    \ "prevw" : "p",
-    \ "quit"  : "q",
-    \ "next"  : "<C-J>",
-    \ "prev"  : "<C-K>",
-    \ "pquit" : "q",
-    \ }
-
-" git.  git操作还是习惯命令行,vim里面处理简单diff编辑操作
-" :Gdiff  :Gstatus :Gvsplit
-Bundle 'tpope/vim-fugitive'
-nnoremap <leader>ge :Gvdiff<CR>
-" not ready to open
-" <leader>gb maps to :Gblame<CR>
-" <leader>gs maps to :Gstatus<CR>
-" <leader>gd maps to :Gdiff<CR>  和现有冲突
-" <leader>gl maps to :Glog<CR>
-" <leader>gc maps to :Gcommit<CR>
-" <leader>gp maps to :Git push<CR>
-
 " edit history, 可以查看回到某个历史状态
 Bundle 'sjl/gundo.vim'
-noremap <leader>h :GundoToggle<CR>
+nnoremap <leader>h :GundoToggle<CR>
 
 " ################### 显示增强 ###################
 
@@ -174,7 +100,7 @@ let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
 
 " 是否打开tabline
-" let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#enabled = 1
 
 " 括号显示增强
 Bundle 'kien/rainbow_parentheses.vim'
@@ -183,7 +109,6 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
-
 
 " ################### 显示增强-主题 ###################"
 
@@ -204,7 +129,6 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 
-
 Bundle 'jistr/vim-nerdtree-tabs'
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 " 关闭同步
@@ -212,11 +136,6 @@ let g:nerdtree_tabs_synchronize_view = 0
 let g:nerdtree_tabs_synchronize_focus = 0
 " 自动开启nerdtree
 "let g:nerdtree_tabs_open_on_console_startup = 1
-
-" 标签导航
-Bundle 'majutsushi/tagbar'
-nmap <F8> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
 
 " ################### 语言相关 ###################
 
@@ -228,7 +147,10 @@ let g:quickrun_config = {
 \   "_" : {
 \       "outputter" : "message",
 \   },
+\   "cpp" : {
+\       "type": "cpp"
+\   },
 \}
 
 let g:quickrun_no_default_key_mappings = 1
-nmap <F9> <Plug>(quickrun)
+nmap <leader>r <Plug>(quickrun)

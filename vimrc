@@ -192,6 +192,9 @@ vnoremap > >gv
 " 复制选中区到系统剪切板中
 vnoremap <leader>y "+y
 
+" 复制系统剪切板中内容到当前区域
+vnoremap <leader>p :read !pbpaste
+
 " w!! to sudo & write a file
 cmap w!! w !sudo tee >/dev/null %
 
@@ -253,7 +256,8 @@ if has("gui_running")
 endif
 
 " 开启真彩色
-set termguicolors
+" NOTE: has issue on Mac Ventura.
+" set termguicolors
 
 colorscheme molokai
 

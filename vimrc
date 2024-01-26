@@ -67,8 +67,10 @@ set backspace=eol,start,indent
 
 " 显示当前的行号列号：
 set ruler
+
 " 在状态栏显示正在输入的命令
 set showcmd
+
 " 左下角显示当前vim模式
 set showmode
 
@@ -82,13 +84,16 @@ set showmatch
 
 " 打开增量搜索模式,随着键入即时搜索
 set incsearch
+
 " 搜索时忽略大小写
 set ignorecase
+
 " 有一个或以上大写字母时仍大小写敏感
 set smartcase
 
 " 打开文件后代码不折叠
 set nofoldenable
+
 " 折叠方法
 set foldmethod=indent
 
@@ -138,6 +143,7 @@ set wildignore=*.o,*~,*.pyc,*.class
 
 " 离开插入模式后自动关闭预览窗口
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 " 回车即选中当前项
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
@@ -181,7 +187,7 @@ noremap <leader>0 :tablast<cr>
 let g:last_active_tab = 1
 nnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
 vnoremap <silent> <leader>tt :execute 'tabnext ' . g:last_active_tab<cr>
-autocmd TabLeave * let g:last_active_tab = tabpagenr()
+"autocmd TabLeave * let g:last_active_tab = tabpagenr()
 
 " 选中及操作改键
 
@@ -221,7 +227,7 @@ function! AutoSetFileHead()
 
     "如果文件类型为python
     if &filetype == 'python'
-        call setline(1, "\#!/usr/bin/env python")
+        call setline(1, "\#!/usr/bin/env python3")
         call append(1, "\# encoding: utf-8")
     endif
 
@@ -256,8 +262,7 @@ if has("gui_running")
 endif
 
 " 开启真彩色
-" NOTE: has issue on Mac Ventura.
-" set termguicolors
+"set termguicolors
 
 colorscheme molokai
 

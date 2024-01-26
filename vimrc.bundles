@@ -27,11 +27,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_python_python_exec = '/usr/bin/python3'
-let g:syntastic_cpp_compiler_options = '-std=c++14'
+" move this option into config file.
+let g:syntastic_cpp_compiler_options = '-std=gnu++23 -I /usr/include/python3.11/'
 
 " pyflakes is faster than pylint
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
-" pyflakes is faster than pylint
 let g:syntastic_javascript_checkers = ['jshint']
 " let g:syntastic_python_pep8_args = '--ignore=E501,E225,E124,E712,E126,E128'
 let g:loaded_syntastic_java_javac_checker = 1
@@ -48,11 +48,11 @@ let g:ycm_show_diagnostics_ui = 0
 Bundle 'sjl/gundo.vim'
 nnoremap <leader>h :GundoToggle<CR>
 
+Bundle 'ctrlpvim/ctrlp.vim'
+
 " ################### 显示增强 ###################
 
 " 状态栏增强展示
-" 新的airline配置
-" Bundle 'vim-airline/vim-airline-themes'
 Bundle 'bling/vim-airline'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -79,6 +79,9 @@ let g:airline_symbols.whitespace = 'Ξ'
 " 是否打开tabline
 "let g:airline#extensions#tabline#enabled = 1
 
+" 新的airline配置
+Bundle 'vim-airline/vim-airline-themes'
+
 " 括号显示增强
 Bundle 'kien/rainbow_parentheses.vim'
 let g:rbpt_loadcmd_toggle = 0
@@ -95,13 +98,12 @@ let g:molokai_original = 1
 let g:rehash256 = 1
 
 " ################### 快速导航 ###################
-"目录导航
+" 目录导航
 Bundle 'scrooloose/nerdtree'
-map <F3> :NERDTreeMirrorToggle<CR>
+map <leader>n :NERDTreeMirrorToggle<CR>
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$']
-"close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+
 " s/v 分屏打开文件
 let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'

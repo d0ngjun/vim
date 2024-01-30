@@ -262,7 +262,7 @@ if has("gui_running")
 endif
 
 " 开启真彩色
-"set termguicolors
+set termguicolors
 
 colorscheme molokai
 

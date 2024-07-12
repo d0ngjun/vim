@@ -48,11 +48,11 @@ let g:ycm_show_diagnostics_ui = 0
 Bundle 'sjl/gundo.vim'
 nnoremap <leader>h :GundoToggle<CR>
 
+Bundle 'ctrlpvim/ctrlp.vim'
+
 " ################### 显示增强 ###################
 
 " 状态栏增强展示
-" 新的airline配置
-" Bundle 'vim-airline/vim-airline-themes'
 Bundle 'bling/vim-airline'
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -79,13 +79,31 @@ let g:airline_symbols.whitespace = 'Ξ'
 " 是否打开tabline
 "let g:airline#extensions#tabline#enabled = 1
 
+" 新的airline配置
+Bundle 'vim-airline/vim-airline-themes'
+
 " 括号显示增强
 Bundle 'kien/rainbow_parentheses.vim'
-let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+let g:rbpt_loadcmd_toggle = 0
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
 
 " ################### 显示增强-主题 ###################"
 
@@ -97,7 +115,7 @@ let g:rehash256 = 1
 " ################### 快速导航 ###################
 "目录导航
 Bundle 'scrooloose/nerdtree'
-map <F3> :NERDTreeMirrorToggle<CR>
+map <leader>n :NERDTreeMirrorToggle<CR>
 let NERDTreeHighlightCursorline = 1
 let NERDTreeIgnore = ['\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$']
 "close vim if the only window left open is a NERDTree
@@ -107,32 +125,14 @@ let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 
 Bundle 'jistr/vim-nerdtree-tabs'
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
-" 关闭同步
-let g:nerdtree_tabs_synchronize_view = 0
-let g:nerdtree_tabs_synchronize_focus = 0
 " 自动开启nerdtree
 "let g:nerdtree_tabs_open_on_console_startup = 1
 
 " ################### 语言相关 ###################
 
 " 代码格式化
-Bundle 'rhysd/vim-clang-format'
-map = :ClangFormat<CR>
+"Bundle 'rhysd/vim-clang-format'
+"map = :ClangFormat<CR>
 
 " For tmux navigator Ctrl-hjkl
 Bundle 'christoomey/vim-tmux-navigator'
-
-Bundle 'thinca/vim-quickrun'
-let g:quickrun_config = {
-\   "_" : {
-\       "outputter" : "message",
-\   },
-\   "cpp" : {
-\       "type": "cpp",
-\       "cmdopt": "-std=c++14",
-\   },
-\}
-
-let g:quickrun_no_default_key_mappings = 1
-nmap <leader>r <Plug>(quickrun)
